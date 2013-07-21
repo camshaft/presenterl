@@ -17,7 +17,7 @@ distclean: clean
 	$(REBAR) delete-deps
 
 test:
-	$(REBAR) skip_deps=true eunit
+	$(REBAR) skip_deps=true eunit --config rebar.test.config
 
 docs: deps
 	$(REBAR) skip_deps=true doc

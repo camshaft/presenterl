@@ -73,10 +73,10 @@ normal_test() ->
   jsx:encode(Body2).
 
 timing_test() ->
-  Result = time(presenterl_test, 0, ?NUM_TESTS),
-  Result2 = time(normal_test, 0, ?NUM_TESTS),
+  Presenterl = time(presenterl_test, 0, ?NUM_TESTS),
+  Traditional = time(normal_test, 0, ?NUM_TESTS),
 
-  0 = Result / Result2.
+  ?debugVal(Presenterl / Traditional).
 
 time(_, Acc, 0) ->
   Acc;

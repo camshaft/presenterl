@@ -1,5 +1,6 @@
 -module(presenterl).
 
+-export([create/0]).
 -export([create/1]).
 -export([create/2]).
 -export([loop/4]).
@@ -8,6 +9,9 @@
 -export([concat/2]).
 -export([conditional/3]).
 -export([encode/1]).
+
+create() ->
+  spawn_link(?MODULE, loop, [undefined, [], undefined, self()]).
 
 create(Serializer) ->
   spawn_link(?MODULE, loop, [Serializer, [], undefined, self()]).
@@ -64,7 +68,12 @@ loop(Serializer, Body, Options, Owner) ->
     {encode, Owner} ->
       Out = case Options of
         undefined ->
-          Serializer:encode(Body);
+          case Serializer of
+            undefined ->
+              Body;
+            Serializer ->
+              Serializer:encode(Body)
+          end;
         _ ->
           Serializer:encode(Body, Options)
       end,
