@@ -57,7 +57,7 @@ encode(Presenter) ->
       Presenter ! {encode, self()},
       receive
         {ok, Presenter, Out} ->
-          {ok, Out};
+          Out;
         Message ->
           Message
       end

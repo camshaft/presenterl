@@ -6,6 +6,19 @@
 
 -define (NUM_TESTS, 50000).
 
+no_encoder_test() ->
+  P = presenterl:create(),
+
+  Value = [
+    {<<"testing">>, 123}
+  ],
+
+  P ! Value,
+
+  ActualValue = presenterl:encode(P),
+
+  ?assertEqual(Value, ActualValue).
+
 simple_test() ->
   P = presenterl:create(jsx),
 
@@ -21,13 +34,11 @@ simple_test() ->
     {<<"boolean">>, true}
   ],
 
-  {ok, Out} = presenterl:encode(P),
+  ActualValue = presenterl:encode(P),
 
-  ?assertEqual(?SIMPLE_EXPECTED, Out),
+  ?assertEqual(?SIMPLE_EXPECTED, ActualValue),
 
-  {error, closed} = presenterl:encode(P),
-
-  Out.
+  {error, closed} = presenterl:encode(P).
 
 conditional_test() ->
   P = presenterl:create(jsx),
@@ -36,9 +47,9 @@ conditional_test() ->
 
   presenterl:conditional(false, [{<<"boolean">>, false}], P),
 
-  {ok, Out} = presenterl:encode(P),
+  ActualValue = presenterl:encode(P),
 
-  ?assertEqual(<<"{\"boolean\":true}">>, Out).
+  ?assertEqual(<<"{\"boolean\":true}">>, ActualValue).
 
 presenterl_test() ->
   P = presenterl:create(jsx),

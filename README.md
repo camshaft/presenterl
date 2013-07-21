@@ -73,7 +73,7 @@ presenterl:conditional(is_authorized(<<"last-name">>, Req), [
   {<<"last-name">>, <<"Bytheway">>}
 ], P),
 
-{ok, JSON} = presenterl:encode(P).
+JSON = presenterl:encode(P).
 ```
 
 API
