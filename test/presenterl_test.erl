@@ -47,9 +47,15 @@ conditional_test() ->
 
   presenterl:conditional(false, [{<<"boolean">>, false}], P),
 
+  presenterl:conditional(true, fun() ->
+    [
+      {<<"fun">>, true}
+    ]
+  end, P),
+
   ActualValue = presenterl:encode(P),
 
-  ?assertEqual(<<"{\"boolean\":true}">>, ActualValue).
+  ?assertEqual(<<"{\"boolean\":true,\"fun\":true}">>, ActualValue).
 
 presenterl_test() ->
   P = presenterl:create(jsx),

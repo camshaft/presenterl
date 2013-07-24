@@ -28,12 +28,16 @@ concat(Data, Presenter) ->
   ok.
 
 conditional(true, Data, Presenter) ->
-  Presenter ! Data,
-  ok;
+  conditional([true], Data, Presenter);
 conditional(Conditionals, Data, Presenter) when is_list(Conditionals) ->
   case check(Conditionals) of
     true ->
-      Presenter ! Data;
+      Presenter ! case is_function(Data) of
+        true ->
+          Data();
+        false ->
+          Data
+      end;
     _ ->
       ok
   end,

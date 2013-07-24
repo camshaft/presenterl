@@ -5,7 +5,7 @@ default: compile
 all: deps compile
 
 compile:
-	$(REBAR) compile
+	$(REBAR) compile --config rebar.test.config
 
 deps:
 	$(REBAR) get-deps
